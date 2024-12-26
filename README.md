@@ -30,10 +30,7 @@
    ./mydoom```
 ## 🤝 Contribuer
 
-Les contributions sont les bienvenues ! Vous pouvez :
-- Soumettre des pull requests pour améliorer le projet.
-- Signaler des bugs ou des problèmes via les issues.
-- Proposer de nouvelles fonctionnalités ou des améliorations.
+Le projet etant terminer contribuer ne serais pas tres utile 
 
 ## 📜 Licence
 
