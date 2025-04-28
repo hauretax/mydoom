@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#ifndef OPEN_MAX
+#define OPEN_MAX 1000
+#endif
+
 
 static int		ft_readfd(const int fd, char **str)
 {

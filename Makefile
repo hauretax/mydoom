@@ -6,15 +6,14 @@ OPT_FLAGS = -flto -O3
 BUG_FLAGS = -g
 FLAGS =  -Wall -Wextra
 LIBRARIES = -L$(LIBFT_DIR) -lft
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD) -I$(SDL_DIR)/SDL2
-
+INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD) -I$(SDL_DIR)/SDL2 -I$(SDL_DIR)/SDL2_ttf.framework/Versions/Current/Headers
 
 PWD = $(shell pwd)
 SDL_DIR = $(shell pwd)/frameworks
 FRAMEWORKS = -F $(SDL_DIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(SDL_DIR)
 
 LIBFT = $(LIBFT_DIR)libft.a
-LIBFT_DIR = ./Libft/
+LIBFT_DIR = ./libft/
 LIBFT_HEAD = $(LIBFT_DIR)
 
 HEADERS_LIST = doom_nukem.h
