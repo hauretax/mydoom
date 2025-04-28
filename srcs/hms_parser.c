@@ -111,7 +111,7 @@ int		hms_parser(t_al *al, char *str)
 		return (pr_err("Invalid extention, provide a .hms file\n"));
 	if (ft_strcmp(str + l - 4, ".hms"))
 		return (pr_err("Invalid extention, provide a .hms file\n"));
-	if ((fd = open(str, O_RDONLY)) < 0)
+	if ((fd = open(str, O_RDONLY | O_BINARY)) < 0)
 		return (pr_err("Can't open file\n"));
 	init_sec_tex(al);
 	if (parse_sectors(al, fd))

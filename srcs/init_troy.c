@@ -15,15 +15,23 @@
 void			load_hud(t_al *al)
 {
 	bmp_to_tex(&(al->h), "ressources/HUD/heart.bmp", 46, 41);
+	printf("Loading heart");
 	bmp_to_tex(&(al->weapon[0]), "ressources/weapon/shotgun1.bmp", 102, 85);
+	printf("Loading shotgun1");
 	bmp_to_tex(&(al->weapon[1]),
 		"ressources/weapon/shotgun_fire.bmp", 102, 105);
+	printf("Loading shotgun_fire");
 	bmp_to_tex(&(al->weapon[2]),
 		"ressources/weapon/shotgun_fire2.bmp", 118, 150);
+	printf("Loading shotgun_fire2");
 	bmp_to_tex(&(al->weapon[3]), "ressources/weapon/shotgun2.bmp", 118, 131);
+	printf("Loading shotgun2");
 	bmp_to_tex(&(al->weapon[4]), "ressources/weapon/shotgun3.bmp", 160, 140);
+	printf("Loading shotgun3");
 	bmp_to_tex(&(al->weapon[5]), "ressources/weapon/shotgun4.bmp", 160, 176);
+	printf("Loading shotgun4");
 	bmp_to_tex(&(al->weapon[6]), "ressources/weapon/shotgun5.bmp", 133, 172);
+	printf("Loading shotgun5");
 	al->f = al->weapon[0];
 }
 
@@ -45,8 +53,11 @@ void			load_death(t_al *al)
 	unsigned		i;
 
 	bmp_to_tex(&al->you_died, "ressources/you_died.bmp", 518, 93);
+	printf("Loading you_died\n");
 	bmp_to_tex(&al->you_win, "ressources/you_win.bmp", 518, 93);
+	printf("Loading you_win\n");
 	bmp_to_tex(al->mob_death + 0, "ressources/mob_death/0.bmp", 512, 512);
+	printf("Loading mob_death0\n");
 	bmp_to_tex(al->mob_death + 1, "ressources/mob_death/1.bmp", 512, 512);
 	bmp_to_tex(al->mob_death + 2, "ressources/mob_death/2.bmp", 512, 512);
 	bmp_to_tex(al->mob_death + 3, "ressources/mob_death/3.bmp", 512, 512);
@@ -98,7 +109,7 @@ void			load_goret(t_tex_group *tgp)
 void			init_textures(t_al *al)
 {
 	static unsigned i = 0;
-
+	printf("Loading [");
 	load_hud(al);
 	load_death(al);
 	if (!al->tex)
@@ -107,9 +118,13 @@ void			init_textures(t_al *al)
 		if (!(al->tex = ft_memalloc((al->nb_tex + 1) * sizeof(t_tex))))
 			exit(0);
 		bmp_to_tex(al->tex + 0, "ressources/skybox.bmp", 32, 32);
+		printf("Loading skybox\n");
 		bmp_to_tex(al->tex + 1, "ressources/wall_tex.bmp", 800, 800);
+		printf("Loading wall_tex\n");
 		bmp_to_tex(al->tex + 2, "ressources/floor_tex.bmp", 950, 950);
+		printf("Loading floor_tex\n");
 		bmp_to_tex(al->tex + 3, "ressources/ceiling_tex.bmp", 512, 512);
+		printf("Loading ceiling_tex\n");
 		if (al->tex[0].pix[0] != 0xffff00ff)
 			while (i < 32 * 32)
 				al->tex[0].pix[i++] |= 0xff000000;

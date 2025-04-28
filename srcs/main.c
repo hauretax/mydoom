@@ -42,8 +42,6 @@ int		main(int ac, char **av)
 		init(al, 0, 1);
 		al->map_write_name = av[2];
 	}
-
-	printf("couille");
 	main_loop(al);
 	return (0);
 }

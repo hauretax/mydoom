@@ -94,10 +94,11 @@ void			init(t_al *al, char *str, int ed)
 		printf("quatre");
 	al->pix = al->sdlsurf->pixels;
 
-	printf("5");
+	printf("tool text\n");
 	init_ttf(al);
 
-	printf("5");
+	
+	printf("tool text\n");
 	al->tex_choice = 0;
 	al->status == EDIT ? init_edit(al) : 0;
 	if (al->status == EDIT)

@@ -4,23 +4,23 @@ CC = gcc
 CCF = -fsanitize=address
 OPT_FLAGS = -flto -O3
 BUG_FLAGS = -g
-FLAGS =  -Wall -Wextra
-LIBRARIES = -L$(LIBFT_DIR) -lft
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD)
-SDL_FLAGS = $(shell pkg-config --cflags --libs sdl2 SDL2_ttf)
+FLAGS = -Wall -Wextra
 
 PWD = $(shell pwd)
-SDL_DIR = $(shell pwd)/frameworks
-# FRAMEWORKS = -F $(SDL_DIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(SDL_DIR)
-
-LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_DIR = ./libft/
 LIBFT_HEAD = $(LIBFT_DIR)
+LIBFT = $(LIBFT_DIR)libft.a
+LIBRARIES = -L$(LIBFT_DIR) -lft
 
-HEADERS_LIST = doom_nukem.h
 HEADERS_DIR = ./includes/
-HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
+HEADERS_LIST = doom_nukem.h
+INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD)
 
+# Utilisation directe de MSYS2 installation SDL2/SDL2_image/SDL2_mixer
+SDL_FLAGS = -IC:/msys64/mingw64/include/SDL2 -LC:/msys64/mingw64/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+
+SRC_DIR = ./srcs/
+OBJ_DIR = obj/
 #init_two.c 				
 #		init_troy.c 			
 SRC_LIST = arrow_edit.c		\
@@ -90,18 +90,17 @@ SRC_LIST = arrow_edit.c		\
 		yeet_text.c			\
 		yeet.c
 
-SRC_DIR = ./srcs/
-SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
+
+SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 OBJ_LIST = $(patsubst %.c, %.o, $(SRC_LIST))
-OBJ_DIR = obj/
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
 
-YELLOW = \033[033m
-GREEN = \033[032m
-BLUE = \033[36m
-RED = \033[031m
-PURPLE = \033[35m
+YELLOW = \033[0;33m
+GREEN = \033[0;32m
+BLUE = \033[0;36m
+RED = \033[0;31m
+PURPLE = \033[0;35m
 RESET = \033[0m
 
 all: $(NAME)
@@ -115,8 +114,8 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 	@echo "\n$(BLUE)Obj directory...$(RESET)[$(GREEN)created$(RESET)]\n"
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)
-	@$(CC) $(FLAGS) $(OPT_FLAGS) -F $(SDL_DIR) -c $(INCLUDES) $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+	@$(CC) $(FLAGS) $(OPT_FLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)$(notdir $(basename $@))...$(RESET)[$(GREEN)OK$(RESET)]"
 
 $(LIBFT):
@@ -136,17 +135,17 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "$(RED)$(NAME)...$(RESET)[$(PURPLE)deleted$(RESET)]\n"
 
-sani:  $(LIBFT) $(OBJ_DIR) $(OBJ)
+sani: $(LIBFT) $(OBJ_DIR) $(OBJ)
 	@echo "$(YELLOW)Sources compilation $(RESET)[$(GREEN)OK$(RESET)]\n"
-	@$(CC) $(CCF) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJ) -o $(NAME)
-	@echo "[$(BLUE)$(NAME) Compiled$(RESET)]"
+	@$(CC) $(CCF) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBRARIES) $(SDL_FLAGS) -lm -o $(NAME)
+	@echo "[$(BLUE)$(NAME) Compiled with sanitizer$(RESET)]"
 
 bug: $(LIBFT) $(OBJ_DIR) $(OBJ)
 	@echo "$(YELLOW)Sources compilation $(RESET)[$(GREEN)OK$(RESET)]\n"
-	@$(CC) $(FLAGS) $(OPT_FLAGS) $(INCLUDES) $(OBJ) $(LIBRARIES) -o $(NAME) $(BUG_FLAGS)
-	@echo "[$(BLUE)$(NAME) Compiled$(RESET)]"
-	lldb ./doom-nukem house.hms
+	@$(CC) $(FLAGS) $(OPT_FLAGS) $(INCLUDES) $(OBJ) $(LIBRARIES) $(SDL_FLAGS) -lm -g -o $(NAME)
+	@echo "[$(BLUE)$(NAME) Compiled for debugging$(RESET)]"
+	lldb ./doom_nukem house.hms
 
 re: fclean all
 
-.PHONY: all clean fclean re sani bug run
+.PHONY: all clean fclean re sani bug fast
