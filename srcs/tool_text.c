@@ -14,9 +14,14 @@
 
 void			init_ttf(t_al *al)
 {
+	printf("1\n");
 	(!TTF_Init()) ? al->ttf_st = 1 : yeet(al);
-	if (!(al->font = TTF_OpenFont("/Library/Fonts/Arial.ttf", 20)))
+	
+	printf("2\n");
+	if (!(al->font = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 20)))
 		yeet(al);
+	
+		printf("3\n");
 }
 
 int				set_text(t_text *text, char *str, SDL_Rect coo, SDL_Color clr)

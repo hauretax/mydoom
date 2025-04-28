@@ -81,15 +81,23 @@ void			init(t_al *al, char *str, int ed)
 		if (hms_parser(al, str))
 			exit(0);
 	launch_init(al, ed);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+		printf("SDL_Init Error: %s\n", SDL_GetError());
 		yeet(al);
+	}
 	if (!(al->sdlwin = SDL_CreateWindow(WIN_TITLE, WIN_POSX, WIN_POSY,
 			WIN_SIZEX, WIN_SIZEY, SDL_WINDOW_SHOWN)))
 		yeet(al);
 	if (!(al->sdlsurf = SDL_GetWindowSurface(al->sdlwin)))
 		yeet(al);
+		printf("quatre");
 	al->pix = al->sdlsurf->pixels;
+
+	printf("5");
 	init_ttf(al);
+
+	printf("5");
 	al->tex_choice = 0;
 	al->status == EDIT ? init_edit(al) : 0;
 	if (al->status == EDIT)

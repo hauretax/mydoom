@@ -6,11 +6,12 @@ OPT_FLAGS = -flto -O3
 BUG_FLAGS = -g
 FLAGS =  -Wall -Wextra
 LIBRARIES = -L$(LIBFT_DIR) -lft
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD) -I$(SDL_DIR)/SDL2 -I$(SDL_DIR)/SDL2_ttf.framework/Versions/Current/Headers
+INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEAD)
+SDL_FLAGS = $(shell pkg-config --cflags --libs sdl2 SDL2_ttf)
 
 PWD = $(shell pwd)
 SDL_DIR = $(shell pwd)/frameworks
-FRAMEWORKS = -F $(SDL_DIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(SDL_DIR)
+# FRAMEWORKS = -F $(SDL_DIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(SDL_DIR)
 
 LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_DIR = ./libft/
@@ -107,7 +108,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ)
 	@echo "$(YELLOW)Sources compilation $(RESET)[$(GREEN)OK$(RESET)]\n"
-	@$(CC) $(FRAMEWORKS) $(FLAGS) $(OPT_FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OPT_FLAGS) $(INCLUDES) $(OBJ) $(LIBRARIES) $(SDL_FLAGS) -lm -o $(NAME)
 	@echo "[$(BLUE)$(NAME) Compiled$(RESET)]"
 
 $(OBJ_DIR):
@@ -142,7 +143,7 @@ sani:  $(LIBFT) $(OBJ_DIR) $(OBJ)
 
 bug: $(LIBFT) $(OBJ_DIR) $(OBJ)
 	@echo "$(YELLOW)Sources compilation $(RESET)[$(GREEN)OK$(RESET)]\n"
-	@$(CC) $(FRAMEWORKS) $(FLAGS) $(OPT_FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OPT_FLAGS) $(INCLUDES) $(OBJ) $(LIBRARIES) -o $(NAME) $(BUG_FLAGS)
 	@echo "[$(BLUE)$(NAME) Compiled$(RESET)]"
 	lldb ./doom-nukem house.hms
 

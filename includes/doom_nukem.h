@@ -20,9 +20,9 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <SDL2/SDL.h>
-# include <SDL2_ttf/SDL_ttf.h>
-# include <SDL2_image/SDL_image.h>
-# include <SDL2_mixer/SDL_mixer.h>
+# include <SDL2/SDL_ttf.h>
+# include <SDL2/SDL_image.h>
+# include <SDL2/SDL_mixer.h>
 
 # define WIN_TITLE "100% really slenderman absolutely virus free i swear"
 # define WIN_SIZEX 1280
